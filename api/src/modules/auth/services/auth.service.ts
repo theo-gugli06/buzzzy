@@ -111,4 +111,21 @@ export class AuthService {
             },
         };
     }
+
+    async getProfile(userId: number) {
+        const user = await this.usersService.findById(userId);
+
+        if (!user) {
+            throw new BadRequestException('Utilisateur introuvable');
+        }
+
+        return {
+            id: user.id,
+            email: user.email,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            phone: user.phone,
+            isActive: user.isActive,
+        };
+    }
 }
