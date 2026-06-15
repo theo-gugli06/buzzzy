@@ -10,16 +10,19 @@ import { AuthService } from '../services/auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
+  // Route d'inscription: cree un compte utilisateur.
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
+  // Route de connexion: verifie les identifiants et renvoie un JWT.
   @Post('login')
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
 
+  // Route protegee: renvoie le profil de l'utilisateur connecte.
   @Get('me')
   @UseGuards(JwtAuthGuard)
   me(@Request() req) {

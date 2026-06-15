@@ -6,6 +6,7 @@ import {
   MinLength,
 } from 'class-validator';
 
+// Donnees attendues lors de l'inscription.
 export class RegisterDto {
   @IsEmail({}, { message: 'L email doit etre valide' })
   @IsNotEmpty({ message: 'L email est obligatoire' })
@@ -29,6 +30,7 @@ export class RegisterDto {
   @IsNotEmpty({ message: 'Le nom est obligatoire' })
   lastname: string;
 
+  // Telephone facultatif pour limiter les donnees personnelles collectees.
   @IsOptional()
   @IsString({ message: 'Le telephone doit etre une chaine de caracteres' })
   phone?: string;

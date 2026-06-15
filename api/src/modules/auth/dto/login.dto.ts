@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
+// Donnees attendues lors de la connexion.
 export class LoginDto {
   @IsEmail({}, { message: 'L email doit etre valide' })
   @IsNotEmpty({ message: 'L email est obligatoire' })

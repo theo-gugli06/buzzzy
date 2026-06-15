@@ -15,6 +15,7 @@ export class AuthService {
     ) { }
 
     async register(registerDto: RegisterDto) {
+        // Nettoie les valeurs recues avant les verifications metier.
         const email = registerDto.email.trim().toLowerCase();
         const password = registerDto.password.trim();
         const confirmPassword = registerDto.confirmPassword.trim();
@@ -98,6 +99,7 @@ export class AuthService {
             email: user.email,
         };
 
+        // Cree le token JWT a partir de l'id et de l'email utilisateur.
         const accessToken = await this.jwtService.signAsync(payload);
         return {
             message: 'Connexion reussie',
@@ -113,6 +115,7 @@ export class AuthService {
     }
 
     async getProfile(userId: number) {
+        // Recupere le profil complet depuis l'id contenu dans le token JWT.
         const user = await this.usersService.findById(userId);
 
         if (!user) {

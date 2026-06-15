@@ -11,6 +11,7 @@ import { AuthService } from './services/auth.service';
 
 @Module({
   imports: [
+    // AuthModule utilise UsersModule pour chercher ou creer des utilisateurs.
     UsersModule,
 
     // Configure le module JWT avec les variables du fichier .env.
@@ -18,8 +19,10 @@ import { AuthService } from './services/auth.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
+        // Cle secrete utilisee pour signer et verifier les tokens.
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
+          // Duree de validite du token, avec 1 jour par defaut.
           expiresIn:
             configService.get<JwtSignOptions['expiresIn']>('JWT_EXPIRES_IN') ?? '1d',
         },
@@ -27,6 +30,7 @@ import { AuthService } from './services/auth.service';
     }),
   ],
   controllers: [AuthController],
+// AuthService gere register/login, JwtStrategy verifie les tokens recus.
 providers: [AuthService, JwtStrategy],
 })
 export class AuthModule { }

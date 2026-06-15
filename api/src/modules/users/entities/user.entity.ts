@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 
 
+// Entity liee a la table SQL "user".
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
@@ -28,12 +29,15 @@ export class UserEntity {
   @Column({ length: 30, nullable: true })
   phone?: string;
 
+  // Permet de desactiver un compte sans le supprimer de la base.
   @Column({ default: true })
   isActive: boolean;
 
+  // Date de creation automatiquement remplie par TypeORM.
   @CreateDateColumn()
   createdAt: Date;
 
+  // Date de derniere modification automatiquement mise a jour.
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
 }
