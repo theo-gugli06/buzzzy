@@ -74,6 +74,9 @@ export class AuthService {
         };
     }
 
+
+
+    
     async login(loginDto: LoginDto) {
         const email = loginDto.email.trim().toLowerCase();
         const password = loginDto.password.trim();
