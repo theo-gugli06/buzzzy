@@ -1,6 +1,7 @@
 // Widget qui contiendra le formulaire de connexion.
 import 'package:app/core/widgets/buzzzy_top_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:app/app/routes.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -163,7 +164,9 @@ class LoginForm extends StatelessWidget {
             width: double.infinity,
             height: 54,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                 Navigator.pushNamed(context, AppRoutes.register);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
                 shape: RoundedRectangleBorder(
