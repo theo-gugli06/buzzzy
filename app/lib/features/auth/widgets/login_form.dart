@@ -61,6 +61,7 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 3),
 
               TextField(
+                obscureText: true,
                 decoration: const InputDecoration(
                   filled: true,
                   fillColor: Color(0xFFEFEFEF),
