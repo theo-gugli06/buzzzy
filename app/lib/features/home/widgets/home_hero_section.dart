@@ -22,6 +22,8 @@ class HomeHeroSection extends StatelessWidget {
                   ),
                 ),
               ),
+
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
@@ -36,7 +38,9 @@ class HomeHeroSection extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+
                     const SizedBox(height: 20),
+                    
                     TextField(
                       decoration: InputDecoration(
                         hintText: 'Nom du salon, prestation...',
@@ -57,7 +61,9 @@ class HomeHeroSection extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 16),
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
