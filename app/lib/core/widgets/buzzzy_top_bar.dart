@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import '../../app/routes.dart';
+import '../../app/routes.dart';
 
 class BuzzzyTopBar extends StatelessWidget {
   const BuzzzyTopBar({super.key});
@@ -18,6 +18,7 @@ class BuzzzyTopBar extends StatelessWidget {
               onPressed: () {},
               icon: const Icon(Icons.menu),
             ),
+
             const Expanded(
               child: Center(
                 child: Text(
@@ -29,12 +30,13 @@ class BuzzzyTopBar extends StatelessWidget {
                 ),
               ),
             ),
+
             SizedBox(
               width: 48,
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
-             //     Navigator.pushNamed(context, AppRoutes.register);
+                  Navigator.pushNamed(context, AppRoutes.login);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 0, 0, 0),
