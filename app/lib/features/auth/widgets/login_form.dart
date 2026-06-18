@@ -3,8 +3,64 @@ import 'package:app/core/widgets/buzzzy_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:app/app/routes.dart';
 
-class LoginForm extends StatelessWidget {
+import '../services/auth_api_service.dart';
+
+class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  // Controller qui permet de récupérer le texte tapé dans le champ email.
+  final TextEditingController emailController = TextEditingController();
+
+  // Controller qui permet de récupérer le texte tapé dans le champ mot de passe.
+  final TextEditingController passwordController = TextEditingController();
+
+  // Fonction appelée quand l'utilisateur appuie sur le bouton "Se connecter".
+  Future<void> _handleLogin() async {
+    // Récupère l'email tapé et enlève les espaces au début/à la fin.
+    final email = emailController.text.trim();
+
+    // Récupère le mot de passe tapé et enlève les espaces au début/à la fin.
+    final password = passwordController.text.trim();
+
+    // Si un des deux champs est vide, on arrête la fonction.
+    if (email.isEmpty || password.isEmpty) {
+      return;
+    }
+
+    try {
+      // Appelle l'API de connexion avec email et mot de passe.
+      final data = await AuthApiService.login(
+        email: email,
+        password: password,
+      );
+
+      // Vérifie que le widget existe encore avant d'afficher un message.
+      if (!mounted) return;
+
+      // Affiche un message de succès renvoyé par l'API.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(data['message'] ?? 'Connexion réussie'),
+        ),
+      );
+    } catch (error) {
+      // Vérifie que le widget existe encore avant d'afficher l'erreur.
+      if (!mounted) return;
+
+      // Affiche le message d'erreur si la connexion échoue.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.toString()),
+        ),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +90,7 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 3),
 
               TextField(
+                controller: emailController,
                 decoration: const InputDecoration(
                   filled: true,
                   fillColor: Color(0xFFEFEFEF),
@@ -62,6 +119,7 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 3),
 
               TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(
                   filled: true,
@@ -109,7 +167,7 @@ class LoginForm extends StatelessWidget {
             width: double.infinity,
             height: 54,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: _handleLogin,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
                 shape: RoundedRectangleBorder(
@@ -165,7 +223,7 @@ class LoginForm extends StatelessWidget {
             height: 54,
             child: ElevatedButton(
               onPressed: () {
-                 Navigator.pushNamed(context, AppRoutes.register);
+                Navigator.pushNamed(context, AppRoutes.register);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
