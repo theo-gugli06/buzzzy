@@ -2,6 +2,7 @@
 import 'package:app/core/widgets/buzzzy_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:app/app/routes.dart';
+import '../services/auth_session_service.dart';
 
 import '../services/auth_api_service.dart';
 
@@ -34,33 +35,32 @@ class _LoginFormState extends State<LoginForm> {
 
     try {
       // Appelle l'API de connexion avec email et mot de passe.
-      final data = await AuthApiService.login(
-        email: email,
-        password: password,
-      );
+      final data = await AuthApiService.login(email: email, password: password);
 
-      // Vérifie que le widget existe encore avant d'afficher un message.
-      if (!mounted) return;
+      final token = data['accessToken'] as String;
+      await AuthSessionService.saveToken(token);
 
-      // Affiche un message de succès renvoyé par l'API.
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(data['message'] ?? 'Connexion réussie'),
-        ),
-      );
+      final savedToken = await AuthSessionService.getToken();
+
+      if (savedToken == null) {
+        throw Exception('Token non stocké');
+      }
+
+     await AuthApiService.getMe(token: savedToken);
+
+if (!mounted) return;
+
+Navigator.pushReplacementNamed(context, AppRoutes.clientHome);
     } catch (error) {
       // Vérifie que le widget existe encore avant d'afficher l'erreur.
       if (!mounted) return;
 
       // Affiche le message d'erreur si la connexion échoue.
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.toString()),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.toString())));
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

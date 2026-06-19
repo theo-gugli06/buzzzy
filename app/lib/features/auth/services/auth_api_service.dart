@@ -5,7 +5,7 @@ class AuthApiService {
   // Adresse de base de l'API NestJS.
   static const String baseUrl = 'http://localhost:3000';
 
-  // Fonction qui envoie email + mot de passe à l'API pour connecter l'utilisateur.
+  // Envoie email + mot de passe à l'API pour connecter l'utilisateur.
   static Future<Map<String, dynamic>> login({
     required String email,
     required String password,
@@ -13,7 +13,7 @@ class AuthApiService {
     // Construit l'URL complète de la route de connexion.
     final url = Uri.parse('$baseUrl/auth/login');
 
-    // Envoie une requête POST à l'API avec les identifiants au format JSON.
+    // Envoie une requête POST avec les identifiants au format JSON.
     final response = await http.post(
       url,
       headers: {
@@ -25,16 +25,42 @@ class AuthApiService {
       }),
     );
 
-    // Transforme la réponse JSON de l'API en données utilisables par Dart.
+    // Transforme la réponse JSON de l'API en données Dart.
     final data = jsonDecode(response.body);
 
-    // Si l'API ne renvoie pas un code de succès, on lance une erreur.
+    // Si l'API ne répond pas avec succès, on lance une erreur.
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw Exception(data['message'] ?? 'Erreur de connexion');
     }
 
-    // Si la connexion réussit, on retourne la réponse complète :
-    // message, accessToken, user, etc.
+    // Retourne message, accessToken, user, etc.
+    return data;
+  }
+
+  // Vérifie le token JWT et récupère le profil de l'utilisateur connecté.
+  static Future<Map<String, dynamic>> getMe({
+    required String token,
+  }) async {
+    // Construit l'URL complète de la route protégée /auth/me.
+    final url = Uri.parse('$baseUrl/auth/me');
+
+    // Envoie le token dans le header Authorization.
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    // Transforme la réponse JSON de l'API en données Dart.
+    final data = jsonDecode(response.body);
+
+    // Si le token est invalide ou expiré, on lance une erreur.
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception(data['message'] ?? 'Session invalide');
+    }
+
+    // Retourne le profil utilisateur.
     return data;
   }
 }
