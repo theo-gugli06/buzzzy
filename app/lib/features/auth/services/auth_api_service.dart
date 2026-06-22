@@ -16,13 +16,8 @@ class AuthApiService {
     // Envoie une requête POST avec les identifiants au format JSON.
     final response = await http.post(
       url,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'email': email,
-        'password': password,
-      }),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'password': password}),
     );
 
     // Transforme la réponse JSON de l'API en données Dart.
@@ -37,19 +32,46 @@ class AuthApiService {
     return data;
   }
 
-  // Vérifie le token JWT et récupère le profil de l'utilisateur connecté.
-  static Future<Map<String, dynamic>> getMe({
-    required String token,
+  // Envoie les informations d'inscription à l'API.
+  static Future<Map<String, dynamic>> register({
+    required String firstname,
+    required String lastname,
+    required String email,
+    String? phone,
+    required String password,
+    required String confirmPassword,
   }) async {
+    final url = Uri.parse('$baseUrl/auth/register');
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'firstname': firstname,
+        'lastname': lastname,
+        'email': email,
+        'phone': phone,
+        'password': password,
+        'confirmPassword': confirmPassword,
+      }),
+    );
+    final data = jsonDecode(response.body);
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception(data['message'] ?? 'Erreur d inscription');
+    }
+
+    return data;
+  }
+
+  // Vérifie le token JWT et récupère le profil de l'utilisateur connecté.
+  static Future<Map<String, dynamic>> getMe({required String token}) async {
     // Construit l'URL complète de la route protégée /auth/me.
     final url = Uri.parse('$baseUrl/auth/me');
 
     // Envoie le token dans le header Authorization.
     final response = await http.get(
       url,
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     // Transforme la réponse JSON de l'API en données Dart.

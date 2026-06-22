@@ -61,9 +61,16 @@ export class AuthService {
             lastname,
             phone,
         });
+        // Cree le token JWT juste apres l'inscription.
+        const payload = {
+            sub: createdUser.id,
+            email: createdUser.email,
+        };
 
+        const accessToken = await this.jwtService.signAsync(payload);
         return {
             message: 'Inscription reussie',
+            accessToken,
             user: {
                 id: createdUser.id,
                 email: createdUser.email,
@@ -76,7 +83,7 @@ export class AuthService {
 
 
 
-    
+
     async login(loginDto: LoginDto) {
         const email = loginDto.email.trim().toLowerCase();
         const password = loginDto.password.trim();
