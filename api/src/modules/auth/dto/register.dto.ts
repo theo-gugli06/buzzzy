@@ -33,7 +33,7 @@ export class RegisterDto {
   @MinLength(12, { message: 'La confirmation du mot de passe doit contenir au moins 12 caracteres' })
   @ApiProperty({
     example: 'Motdepasse1*',
-    description: 'Mot de passe, minimum 12 caracteres',
+    description: 'Confirmation du mot de passe, minimum 12 caracteres',
     minLength: 12,
   })
   confirmPassword: string;
