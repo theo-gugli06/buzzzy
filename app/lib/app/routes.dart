@@ -18,6 +18,6 @@ class AppRoutes {
     login: (context) => const LoginScreen(),
     register: (context) => const RegisterScreen(),
 
-    clientHome: (context) => const HomeClientScreen(),
+    clientHome: (context) => const ClientHomeScreen(),
   };
 }

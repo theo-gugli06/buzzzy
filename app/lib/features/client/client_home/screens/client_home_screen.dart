@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 
 import '../../../auth/services/auth_api_service.dart';
 import '../../../auth/services/auth_session_service.dart';
@@ -63,4 +63,22 @@ class HomeClientScreen extends StatelessWidget {
       ),
     );
   }
+} */
+
+import 'package:flutter/material.dart';
+
+import '../widgets/client_home_widget.dart';
+
+
+class ClientHomeScreen extends StatelessWidget {
+  const ClientHomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+     backgroundColor: Color.fromARGB(255, 255, 255, 255),
+    body: ClientHomeWidget(),
+    );
+  }
 }
+
