@@ -24,8 +24,8 @@ async function bootstrap() {
 
 
   const config = new DocumentBuilder()
-    .setTitle('Buzzzy api')
-    .setDescription(" Documentation de l'api buzzzy ")
+    .setTitle('Buzzzy API')
+    .setDescription("Documentation de l'API Buzzzy")
     .setVersion('1.0')
     .addTag('Auth') 
     .addBearerAuth() // Ajoute le bouton Authorize pour tester les routes protegees avec le token JWT.
