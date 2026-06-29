@@ -6,6 +6,8 @@ import '../features/auth/screens/register_screen.dart';
 
 import '../features/client/client_home/screens/client_home_screen.dart';
 
+import '../core/guards/auth_guard.dart';
+
 class AppRoutes {
   static const String home = '/';
   static const String login = '/login';
@@ -18,6 +20,6 @@ class AppRoutes {
     login: (context) => const LoginScreen(),
     register: (context) => const RegisterScreen(),
 
-    clientHome: (context) => const ClientHomeScreen(),
+    clientHome: (context) => const AuthGuard(child: ClientHomeScreen()),
   };
 }
