@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../app/routes.dart';
 
 class ProLandingWidget extends StatelessWidget {
   const ProLandingWidget({super.key});
@@ -17,25 +18,37 @@ class ProLandingWidget extends StatelessWidget {
         const SizedBox(height: 30),
 
         Padding(
+          // Marge gauche/droite pour que le bouton ne touche pas les bords.
           padding: const EdgeInsets.symmetric(horizontal: 24),
+
           child: SizedBox(
+            // Le bouton prend toute la largeur disponible dans le Padding.
             width: double.infinity,
+
             child: OutlinedButton(
               onPressed: () {
-                // Plus tard : navigation vers création salon
+                Navigator.pushNamed(context, AppRoutes.proEstablishmentType);
               },
+
               style: OutlinedButton.styleFrom(
+                // Espace à l'intérieur du bouton.
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 22,
                 ),
+
+                // Bordure du bouton.
                 side: const BorderSide(color: Colors.black, width: 1.5),
+
+                // Coins arrondis.
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
               ),
+
               child: Row(
                 children: [
+                  // Rond avec l'icône du type "établissement".
                   Container(
                     width: 58,
                     height: 58,
@@ -92,7 +105,7 @@ class ProLandingWidget extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
-                // Plus tard : navigation vers création salon
+                Navigator.pushNamed(context, AppRoutes.login);
               },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
