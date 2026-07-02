@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //import '../../../app/routes.dart';
 import '../../../core/widgets/buzzzy_top_bar.dart';
+import '../../../app/routes.dart';
 
 class HomeHeroSection extends StatelessWidget {
   const HomeHeroSection({super.key});
@@ -8,7 +9,6 @@ class HomeHeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      
       children: [
         const BuzzzyTopBar(),
         Expanded(
@@ -22,7 +22,6 @@ class HomeHeroSection extends StatelessWidget {
                   ),
                 ),
               ),
-
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -40,7 +39,7 @@ class HomeHeroSection extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 20),
-                    
+
                     TextField(
                       decoration: InputDecoration(
                         hintText: 'Nom du salon, prestation...',
@@ -67,7 +66,9 @@ class HomeHeroSection extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, AppRoutes.proLanding);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                           padding: const EdgeInsets.symmetric(vertical: 18),

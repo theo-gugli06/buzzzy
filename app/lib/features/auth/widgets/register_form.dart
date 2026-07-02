@@ -304,6 +304,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                 ),
               ),
+              
               const SizedBox(height: 24),
 
               Padding(
