@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../app/routes.dart';
 
 class ProEstablishmentTypeWidget extends StatelessWidget {
   const ProEstablishmentTypeWidget({super.key});
@@ -26,7 +27,13 @@ class ProEstablishmentTypeWidget extends StatelessWidget {
             width: double.infinity,
             height: 100,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.proEstablishmentDetails,
+                  arguments: 'hair',
+                );
+              },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -49,11 +56,7 @@ class ProEstablishmentTypeWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.black,
-                    size: 24,
-                  ),
+                  Icon(Icons.arrow_forward, color: Colors.black, size: 24),
                 ],
               ),
             ),
@@ -68,7 +71,13 @@ class ProEstablishmentTypeWidget extends StatelessWidget {
             width: double.infinity,
             height: 100,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.proEstablishmentDetails,
+                  arguments: 'beauty',
+                );
+              },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -91,11 +100,7 @@ class ProEstablishmentTypeWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.black,
-                    size: 24,
-                  ),
+                  Icon(Icons.arrow_forward, color: Colors.black, size: 24),
                 ],
               ),
             ),
@@ -110,7 +115,13 @@ class ProEstablishmentTypeWidget extends StatelessWidget {
             width: double.infinity,
             height: 100,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.proEstablishmentDetails,
+                  arguments: 'wellness',
+                );
+              },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -133,11 +144,7 @@ class ProEstablishmentTypeWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.black,
-                    size: 24,
-                  ),
+                  Icon(Icons.arrow_forward, color: Colors.black, size: 24),
                 ],
               ),
             ),

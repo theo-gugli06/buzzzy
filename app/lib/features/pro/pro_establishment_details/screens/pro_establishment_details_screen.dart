@@ -8,13 +8,15 @@ class ProEstablishmentDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+    final category = ModalRoute.of(context)!.settings.arguments as String;
+
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: [
-          BuzzzyTopBar(),
+          const BuzzzyTopBar(),
           Expanded(
-            child: ProEstablishmentDetailsWidget(),
+            child: ProEstablishmentDetailsWidget(category: category),
           ),
         ],
       ),
