@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../app/routes.dart';
 
 class ProEstablishmentDetailsWidget extends StatelessWidget {
   const ProEstablishmentDetailsWidget({super.key, required this.category});
@@ -46,7 +47,13 @@ class ProEstablishmentDetailsWidget extends StatelessWidget {
               width: double.infinity,
               height: 54,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.proContactDetails,
+                    arguments: {'category': category, 'specialty': specialty},
+                  );
+                },
                 style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.white,
                   side: const BorderSide(color: Colors.black, width: 1.2),

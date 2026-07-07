@@ -40,6 +40,7 @@ CREATE TABLE salon (
     name VARCHAR(255) NOT NULL,
     description VARCHAR(1000),
     category VARCHAR(100) NOT NULL,
+    specialty VARCHAR(100) NOT NULL,
     phone VARCHAR(30) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     address VARCHAR(255) NOT NULL,
