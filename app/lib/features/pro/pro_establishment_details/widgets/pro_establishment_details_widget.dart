@@ -50,7 +50,7 @@ class ProEstablishmentDetailsWidget extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
-                    AppRoutes.proContactDetails,
+                    AppRoutes.proAccountDetails,
                     arguments: {'category': category, 'specialty': specialty},
                   );
                 },

@@ -8,14 +8,42 @@ class ProSalonInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
+    // Données récupérées depuis les pages précédentes du parcours pro.
+    final category = arguments['category']!;
+    final specialty = arguments['specialty']!;
+
+    // Indique si l'utilisateur vient du mode création de compte ou connexion.
+    final accountMode = arguments['accountMode']!;
+
+    // Données du compte envoyées depuis la page précédente.
+    final firstname = arguments['firstname'];
+    final lastname = arguments['lastname'];
+    final phone = arguments['phone'];
+    // Le "!" indique que l'email est obligatoire ici.
+    // Il est envoyé dans les deux cas : création de compte et connexion.
+    final email = arguments['email']!;
+    final password = arguments['password'];
+
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: [
-          BuzzzyTopBar(),
-         Expanded(
-            child: ProSalonInfoWidget(),
-         ),
+          const BuzzzyTopBar(),
+          Expanded(
+            child: ProSalonInfoWidget(
+              category: category,
+              specialty: specialty,
+              accountMode: accountMode,
+              firstname: firstname,
+              lastname: lastname,
+              phone: phone,
+              email: email,
+              password: password,
+            ),
+          ),
         ],
       ),
     );

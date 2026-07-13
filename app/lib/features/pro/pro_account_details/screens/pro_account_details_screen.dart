@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/buzzzy_top_bar.dart';
-import '../widgets/pro_contact_details_widget.dart';
+import '../widgets/pro_account_details_widget.dart';
 
-class ProContactDetailsScreen extends StatelessWidget {
-  const ProContactDetailsScreen({super.key});
+class ProAccountDetailsScreen extends StatelessWidget {
+  const ProAccountDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     // On récupère les données envoyées depuis la page précédente.
+    // Ici, on attend une Map avec des clés comme "category" et "specialty".
     final arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
+    // On récupère la catégorie choisie : hair, beauty ou wellness.
+    // Le "!" veut dire : je suis sûr que cette valeur existe et qu'elle n'est pas null.
     final category = arguments['category']!;
     final specialty = arguments['specialty']!;
 
@@ -21,7 +24,8 @@ class ProContactDetailsScreen extends StatelessWidget {
         children: [
           const BuzzzyTopBar(),
           Expanded(
-            child: ProContactDetailsWidget(
+            child: ProAccountDetailsWidget(
+               // On envoie la catégorie récupérée au widget.
               category: category,
               specialty: specialty,
             ),

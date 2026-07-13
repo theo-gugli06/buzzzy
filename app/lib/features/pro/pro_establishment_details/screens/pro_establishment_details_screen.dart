@@ -8,6 +8,10 @@ class ProEstablishmentDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    //  ModalRoute.of(context)! récupère la route/page actuelle
+    // .settings récupère les paramètres de cette route
+    // .arguments récupère la donnée envoyée à cette page
     final category = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
