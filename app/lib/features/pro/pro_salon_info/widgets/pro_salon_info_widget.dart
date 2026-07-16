@@ -216,10 +216,8 @@ class _SalonTextField extends StatelessWidget {
   // Petit widget réutilisable pour éviter de répéter le même TextField 6 fois
   final String label;
   final String hintText;
-  final TextEditingController
-  controller; // Controller relié au TextField pour récupérer le texte tapé.
-  final TextInputType?
-  keyboardType; // Type de clavier à afficher, par exemple numérique pour le code postal.
+  final TextEditingController controller; // Controller relié au TextField pour récupérer le texte tapé.
+  final TextInputType? keyboardType; // Type de clavier à afficher, par exemple numérique pour le code postal.
   // Le ? veut dire que cette valeur est optionnelle.
 
   @override

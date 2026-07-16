@@ -12,7 +12,7 @@ class ProEstablishmentTypeScreen extends StatelessWidget {
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: [
-          BuzzzyTopBar(),
+          BuzzzyTopBar(showBackButton: true),
           Expanded(
             child: ProEstablishmentTypeWidget(),
           ),

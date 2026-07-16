@@ -66,7 +66,7 @@ Navigator.pushReplacementNamed(context, AppRoutes.clientHome);
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const BuzzzyTopBar(),
+        const BuzzzyTopBar(showBackButton: true),
 
         const SizedBox(height: 30),
 

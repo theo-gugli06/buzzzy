@@ -368,7 +368,7 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
 
         // Top bar fixée au-dessus du contenu scrollable.
-        const Positioned(top: 0, left: 0, right: 0, child: BuzzzyTopBar()),
+        const Positioned(top: 0, left: 0, right: 0, child: BuzzzyTopBar(showBackButton: true)),
       ],
     );
   }

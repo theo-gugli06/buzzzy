@@ -18,7 +18,7 @@ class ProEstablishmentDetailsScreen extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: [
-          const BuzzzyTopBar(),
+          const BuzzzyTopBar(showBackButton: true),
           Expanded(
             child: ProEstablishmentDetailsWidget(category: category),
           ),
