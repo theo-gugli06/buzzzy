@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../app/routes.dart';
+import '../../shared/models/pro_flow_data.dart';
 
 class ProEstablishmentDetailsWidget extends StatelessWidget {
   const ProEstablishmentDetailsWidget({super.key, required this.category});
@@ -51,7 +52,12 @@ class ProEstablishmentDetailsWidget extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     AppRoutes.proAccountDetails,
-                    arguments: {'category': category, 'specialty': specialty},
+                    arguments: ProFlowData(
+                      category: category,
+                      specialty: specialty,
+                      accountMode: '',
+                      email: '',
+                    ),
                   );
                 },
                 style: OutlinedButton.styleFrom(

@@ -1,41 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../shared/models/pro_flow_data.dart';
 
 class ProSalonInfoWidget extends StatefulWidget {
-  const ProSalonInfoWidget({
-    super.key,
+  const ProSalonInfoWidget({super.key, required this.proFlowData});
 
-    // Données obligatoires : elles sont toujours envoyées
-    // depuis les pages précédentes.
-    required this.category,
-    required this.specialty,
-    required this.accountMode,
-    required this.email,
-
-    // Données optionnelles : elles existent surtout
-    // quand l'utilisateur crée un compte.
-    this.firstname,
-    this.lastname,
-    this.phone,
-    this.password,
-  });
-
-  final String category;
-  final String specialty;
-
-  // Permet de savoir si l'utilisateur vient du formulaire
-  // de création de compte ou du formulaire de connexion.
-  final String accountMode;
-
-  // Email obligatoire, car il est envoyé dans les deux cas :
-  // création de compte et connexion.
-  final String email;
-
-  // Valeurs optionnelles.
-  // Le "?" veut dire que la valeur peut être null.
-  final String? firstname;
-  final String? lastname;
-  final String? phone;
-  final String? password;
+  // Données récupérées depuis les étapes précédentes du parcours pro.
+  final ProFlowData proFlowData;
 
   @override
   State<ProSalonInfoWidget> createState() => _ProSalonInfoWidgetState();
@@ -72,19 +42,14 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
     }
 
     final salonData = {
-      // Données choisies au début du parcours pro.
-      'category': widget.category,
-      'specialty': widget.specialty,
-
-      // Indique si l'utilisateur a créé un compte ou s'est connecté.
-      'accountMode': widget.accountMode,
-
-      // Données du compte.
-      'firstname': widget.firstname,
-      'lastname': widget.lastname,
-      'phone': widget.phone,
-      'email': widget.email,
-      'password': widget.password,
+      'category': widget.proFlowData.category,
+      'specialty': widget.proFlowData.specialty,
+      'accountMode': widget.proFlowData.accountMode,
+      'firstname': widget.proFlowData.firstname,
+      'lastname': widget.proFlowData.lastname,
+      'phone': widget.proFlowData.phone,
+      'email': widget.proFlowData.email,
+      'password': widget.proFlowData.password,
 
       // Données du salon saisies sur cette page.
       'name': name,
@@ -216,8 +181,10 @@ class _SalonTextField extends StatelessWidget {
   // Petit widget réutilisable pour éviter de répéter le même TextField 6 fois
   final String label;
   final String hintText;
-  final TextEditingController controller; // Controller relié au TextField pour récupérer le texte tapé.
-  final TextInputType? keyboardType; // Type de clavier à afficher, par exemple numérique pour le code postal.
+  final TextEditingController
+  controller; // Controller relié au TextField pour récupérer le texte tapé.
+  final TextInputType?
+  keyboardType; // Type de clavier à afficher, par exemple numérique pour le code postal.
   // Le ? veut dire que cette valeur est optionnelle.
 
   @override

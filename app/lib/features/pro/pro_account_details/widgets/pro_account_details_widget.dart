@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../../app/routes.dart';
+import '../../shared/models/pro_flow_data.dart';
 
 class ProAccountDetailsWidget extends StatefulWidget {
-  const ProAccountDetailsWidget({
-    super.key,
-    required this.category,
-    required this.specialty,
-  });
+  const ProAccountDetailsWidget({super.key, required this.proFlowData});
 
-  // Catégorie choisie avant
-  final String category;
-
-  // Spécialité choisie avant
-  final String specialty;
+  final ProFlowData proFlowData;
 
   @override
   State<ProAccountDetailsWidget> createState() =>
@@ -76,16 +69,16 @@ class _ProAccountDetailsWidgetState extends State<ProAccountDetailsWidget> {
     Navigator.pushNamed(
       context,
       AppRoutes.proSalonInfo,
-      arguments: {
-        'category': widget.category,
-        'specialty': widget.specialty,
-        'accountMode': 'create',
-        'firstname': firstname,
-        'lastname': lastname,
-        'phone': phone,
-        'email': email,
-        'password': password,
-      },
+      arguments: ProFlowData(
+        category: widget.proFlowData.category,
+        specialty: widget.proFlowData.specialty,
+        accountMode: 'create',
+        firstname: firstname,
+        lastname: lastname,
+        phone: phone,
+        email: email,
+        password: password,
+      ),
     );
   }
 
@@ -102,12 +95,12 @@ class _ProAccountDetailsWidgetState extends State<ProAccountDetailsWidget> {
     Navigator.pushNamed(
       context,
       AppRoutes.proSalonInfo,
-      arguments: {
-        'category': widget.category,
-        'specialty': widget.specialty,
-        'accountMode': 'login',
-        'email': email,
-      },
+      arguments: ProFlowData(
+        category: widget.proFlowData.category,
+        specialty: widget.proFlowData.specialty,
+        accountMode: 'login',
+        email: email,
+      ),
     );
   }
 
