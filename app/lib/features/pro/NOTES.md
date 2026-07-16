@@ -10,3 +10,5 @@ pro_salon_info_screen.dart / pro_salon_info_widget.dart / infos salon
 
 
 je dois penser que si une peronne arrive sur une page ou ya des arguments demandé bah que ca renvoie a la page pro landing directement pr evité que ca plante 
+
+je dois pensé aussi les verif coté front 
