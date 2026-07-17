@@ -13,6 +13,7 @@ class ProSalonInfoWidget extends StatefulWidget {
 
 class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
   // Controllers = objets qui permettent de lire ce que l'utilisateur tape.
+  final TextEditingController salonPhoneController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -25,6 +26,7 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
   void _handleSubmit() {
     // final c 'est une variable qu'on initialise une fois et qu'on ne modifie plus.
     // Ici on récupère les textes tapés dans les champs
+    final salonPhone = salonPhoneController.text.trim();
     final name = nameController.text.trim();
     final description = descriptionController.text.trim();
     final address = addressController.text.trim();
@@ -34,6 +36,7 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
 
     // Si un champ obligatoire est vide on stoppe la fonction
     if (name.isEmpty ||
+        salonPhone.isEmpty ||
         address.isEmpty ||
         city.isEmpty ||
         postalCode.isEmpty ||
@@ -47,13 +50,15 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
       'accountMode': widget.proFlowData.accountMode,
       'firstname': widget.proFlowData.firstname,
       'lastname': widget.proFlowData.lastname,
-      'phone': widget.proFlowData.phone,
+      'userPhone': widget.proFlowData.userPhone,
       'email': widget.proFlowData.email,
       'password': widget.proFlowData.password,
+      'confirmPassword': widget.proFlowData.confirmPassword,
 
       // Données du salon saisies sur cette page.
       'name': name,
       'description': description,
+      'salonPhone': salonPhone,
       'address': address,
       'city': city,
       'postalCode': postalCode,
@@ -66,6 +71,7 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
   @override
   void dispose() {
     // On libère les controllers quand le widget disparaît.
+    salonPhoneController.dispose();
     nameController.dispose();
     descriptionController.dispose();
     addressController.dispose();
@@ -107,6 +113,15 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
             controller: descriptionController,
           ),
 
+          const SizedBox(height: 15),
+
+          _SalonTextField(
+            label: 'Téléphone du salon *',
+            hintText: 'Ex : 06 00 00 00 00',
+            controller: salonPhoneController,
+            keyboardType: TextInputType.phone,
+          ),
+          
           const SizedBox(height: 15),
 
           _SalonTextField(

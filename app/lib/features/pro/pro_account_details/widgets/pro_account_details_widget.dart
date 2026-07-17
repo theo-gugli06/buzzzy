@@ -75,9 +75,10 @@ class _ProAccountDetailsWidgetState extends State<ProAccountDetailsWidget> {
         accountMode: 'create',
         firstname: firstname,
         lastname: lastname,
-        phone: phone,
+        userPhone: phone,
         email: email,
         password: password,
+        confirmPassword: confirmPassword,
       ),
     );
   }

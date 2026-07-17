@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { SalonsModule } from './modules/salons/salons.module';
 
 // Module principal de l'API.
 @Module({
@@ -39,6 +40,7 @@ import { UsersModule } from './modules/users/users.module';
     // Modules metier de l'application.
     AuthModule,
     UsersModule,
+    SalonsModule,
   ],
   controllers: [],
   providers: [],

@@ -12,11 +12,11 @@ class ProFlowData {
     // quand l'utilisateur crée un compte.
     this.firstname,
     this.lastname,
-    this.phone,
+    this.userPhone,
     this.password,
+    this.confirmPassword,
   });
 
-  
   final String category;
   final String specialty;
 
@@ -24,13 +24,15 @@ class ProFlowData {
   // Exemple : "create" ou "login".
   final String accountMode;
 
-
   final String email;
 
   // Le "?" veut dire que ces valeurs peuvent être null.
   // Elles sont présentes en création de compte
   final String? firstname;
   final String? lastname;
-  final String? phone;
+  // Telephone du compte utilisateur.
+  final String? userPhone;
   final String? password;
+
+  final String? confirmPassword;
 }
