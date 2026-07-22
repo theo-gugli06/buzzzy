@@ -56,7 +56,7 @@ class ProEstablishmentDetailsWidget extends StatelessWidget {
                       category: category,
                       specialty: specialty,
                       accountMode: '',
-                      email: '',
+                      userEmail: '',
                     ),
                   );
                 },

@@ -4,6 +4,7 @@ import {
   IsOptional, // Indique qu'un champ n'est pas obligatoire.
   IsString, // Verifie que la valeur est une chaine de caracteres.
   MinLength, // Verifie une longueur minimale, utile pour le mot de passe.
+  Matches, // Verifie qu'une valeur respecte un format precis, par exemple 10 chiffres.
 } from 'class-validator';
 
 import {
@@ -40,44 +41,55 @@ export class CreateSalonDto {
   // Telephone user
   @IsOptional()
   @IsString({ message: 'Le telephone utilisateur doit etre une chaine de caracteres' })
+  @Matches(/^[0-9]{10}$/, {
+    message: 'Le telephone utilisateur doit contenir exactement 10 chiffres',
+  })
   @ApiPropertyOptional({
     example: '0600000000',
     description: "Telephone du compte utilisateur",
   })
   userPhone?: string;
 
-  @IsEmail({}, { message: 'L email doit etre valide' })
-  @IsNotEmpty({ message: 'L email est obligatoire' })
+  @IsEmail({}, { message: 'L email utilisateur doit etre valide' })
+  @IsNotEmpty({ message: 'L email utilisateur est obligatoire' })
   @ApiProperty({
     example: 'theo@test.com',
-    description: "Email du compte utilise pour creer le salon",
+    description: "Email utilise pour creer le compte utilisateur",
   })
-  email: string;
+  userEmail: string;
 
-  @IsOptional()
+  @IsEmail({}, { message: 'L email du salon doit etre valide' })
+  @IsNotEmpty({ message: 'L email du salon est obligatoire' })
+  @ApiProperty({
+    example: 'contact@salon-martin.fr',
+    description: 'Email public de contact du salon',
+  })
+  salonEmail: string;
+
   @IsString({ message: 'Le mot de passe doit etre une chaine de caracteres' })
+  @IsNotEmpty({ message: 'Le mot de passe est obligatoire' })
   @MinLength(12, { message: 'Le mot de passe doit contenir au moins 12 caracteres' })
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: 'Motdepasse1*',
-    description: 'Mot de passe si le compte est cree pendant le parcours pro',
+    description: 'Mot de passe du compte cree pendant le parcours pro',
     minLength: 12,
   })
-  password?: string;
+  password: string;
 
-  @IsOptional()
   @IsString({ message: 'La confirmation du mot de passe doit etre une chaine de caracteres' })
+  @IsNotEmpty({ message: 'La confirmation du mot de passe est obligatoire' })
   @MinLength(12, { message: 'La confirmation du mot de passe doit contenir au moins 12 caracteres' })
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: 'Motdepasse1*',
-    description: 'Confirmation du mot de passe si le compte est cree pendant le parcours pro',
+    description: 'Confirmation du mot de passe du compte cree pendant le parcours pro',
     minLength: 12,
   })
-  confirmPassword?: string;
+  confirmPassword: string;
 
 
 
 
-  
+
   @IsString({ message: 'La categorie doit etre une chaine de caracteres' })
   @IsNotEmpty({ message: 'La categorie est obligatoire' })
   @ApiProperty({
@@ -112,6 +124,9 @@ export class CreateSalonDto {
 
   // Telephone salon
   @IsString({ message: 'Le telephone du salon doit etre une chaine de caracteres' })
+  @Matches(/^[0-9]{10}$/, {
+    message: 'Le telephone du salon doit contenir exactement 10 chiffres',
+  })
   @IsNotEmpty({ message: 'Le telephone du salon est obligatoire' })
   @ApiProperty({
     example: '0600000000',

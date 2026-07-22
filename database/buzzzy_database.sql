@@ -31,24 +31,24 @@ CREATE TABLE role (
 );
 
 INSERT INTO role (name, label) VALUES
-('owner', 'owner'),
-('manager', 'manager'),
-('employee', 'employee');
+('owner', 'Propriétaire'),
+('manager', 'Gérant'),
+('employee', 'Employé');
 
 CREATE TABLE salon (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(1000),
-    category VARCHAR(100) NOT NULL,
-    specialty VARCHAR(100) NOT NULL,
+        category VARCHAR(100) NOT NULL,
+        specialty VARCHAR(100) NOT NULL,
     phone VARCHAR(30) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     address VARCHAR(255) NOT NULL,
     city VARCHAR(100) NOT NULL,
     "postalCode" VARCHAR(20) NOT NULL,
     country VARCHAR(100) NOT NULL,
-    latitude DECIMAL(10, 7),
-    longitude DECIMAL(10, 7),
+        latitude DECIMAL(10, 7), 
+        longitude DECIMAL(10, 7),
     "isActive" BOOLEAN NOT NULL DEFAULT TRUE,
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP

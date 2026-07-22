@@ -6,7 +6,7 @@ class ProFlowData {
     required this.category,
     required this.specialty,
     required this.accountMode,
-    required this.email,
+    required this.userEmail,
 
     // Données optionnelles : elles existent surtout
     // quand l'utilisateur crée un compte.
@@ -24,12 +24,14 @@ class ProFlowData {
   // Exemple : "create" ou "login".
   final String accountMode;
 
-  final String email;
+ 
 
   // Le "?" veut dire que ces valeurs peuvent être null.
   // Elles sont présentes en création de compte
   final String? firstname;
   final String? lastname;
+  // Email utilise pour le compte utilisateur.
+  final String userEmail;
   // Telephone du compte utilisateur.
   final String? userPhone;
   final String? password;

@@ -5,6 +5,7 @@ class ProSalonApiService {
   // Adresse de base de l'API NestJS en local.
   static const String baseUrl = 'http://localhost:3000';
 
+
   // Envoie les données du parcours pro à l'API.
   static Future<Map<String, dynamic>> createProSalon({
     required Map<String, dynamic> salonData,

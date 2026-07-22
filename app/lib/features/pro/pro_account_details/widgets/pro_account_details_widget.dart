@@ -50,13 +50,27 @@ class _ProAccountDetailsWidgetState extends State<ProAccountDetailsWidget> {
     final password = passwordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
 
+    final phoneRegex = RegExp(r'^[0-9]{10}$');
+
     // Si un champ obligatoire est vide, on bloque la suite.
     if (firstname.isEmpty ||
         lastname.isEmpty ||
-        phone.isEmpty ||
         email.isEmpty ||
         password.isEmpty ||
         confirmPassword.isEmpty) {
+      return;
+    }
+
+    // Si le téléphone ne respecte pas le format attendu,
+    // on affiche une erreur et on bloque la suite du parcours.
+    if (phone.isNotEmpty && !phoneRegex.hasMatch(phone)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Le numéro de téléphone doit contenir 10 chiffres'),
+        ),
+      ); // hasMatch vaut true si le numéro est valide.
+      // Le "!" inverse le résultat : si hasMatch vaut false, le if devient true et affiche l'erreur.
+
       return;
     }
 
@@ -75,8 +89,8 @@ class _ProAccountDetailsWidgetState extends State<ProAccountDetailsWidget> {
         accountMode: 'create',
         firstname: firstname,
         lastname: lastname,
-        userPhone: phone,
-        email: email,
+        userPhone: phone.isEmpty ? null : phone,
+        userEmail: email,
         password: password,
         confirmPassword: confirmPassword,
       ),
@@ -100,7 +114,7 @@ class _ProAccountDetailsWidgetState extends State<ProAccountDetailsWidget> {
         category: widget.proFlowData.category,
         specialty: widget.proFlowData.specialty,
         accountMode: 'login',
-        email: email,
+        userEmail: email,
       ),
     );
   }
@@ -150,7 +164,7 @@ class _ProAccountDetailsWidgetState extends State<ProAccountDetailsWidget> {
             const SizedBox(height: 15),
 
             _AccountTextField(
-              label: 'Téléphone *',
+              label: 'Téléphone',
               hintText: 'Ex : 06 86 26 44 44',
               controller: phoneController,
               keyboardType: TextInputType.phone,

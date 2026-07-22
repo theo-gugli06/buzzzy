@@ -7,7 +7,7 @@ class ProEstablishmentTypeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,  // Place les éléments à gauche de la Column.
       children: [
         const SizedBox(height: 40),
 

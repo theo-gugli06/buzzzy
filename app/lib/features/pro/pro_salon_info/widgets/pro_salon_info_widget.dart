@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../shared/models/pro_flow_data.dart';
 
+import '../../services/pro_salon_api_service.dart';
+
+import '../../../../app/routes.dart';
+
 class ProSalonInfoWidget extends StatefulWidget {
   const ProSalonInfoWidget({super.key, required this.proFlowData});
 
@@ -14,6 +18,7 @@ class ProSalonInfoWidget extends StatefulWidget {
 class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
   // Controllers = objets qui permettent de lire ce que l'utilisateur tape.
   final TextEditingController salonPhoneController = TextEditingController();
+  final TextEditingController salonEmailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -21,12 +26,16 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
   final TextEditingController postalCodeController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
 
+  // Indique si l'appel API est en cours.
+  bool isLoading = false;
+
   // _handleSubmit = gérer la validation du formulaire
   // Cette fonction est appelée quand l'utilisateur clique sur Valider
-  void _handleSubmit() {
+  Future<void> _handleSubmit() async {
     // final c 'est une variable qu'on initialise une fois et qu'on ne modifie plus.
     // Ici on récupère les textes tapés dans les champs
     final salonPhone = salonPhoneController.text.trim();
+    final salonEmail = salonEmailController.text.trim();
     final name = nameController.text.trim();
     final description = descriptionController.text.trim();
     final address = addressController.text.trim();
@@ -34,13 +43,28 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
     final postalCode = postalCodeController.text.trim();
     final country = countryController.text.trim();
 
+    final salonPhoneRegex = RegExp(r'^[0-9]{10}$');
+
     // Si un champ obligatoire est vide on stoppe la fonction
     if (name.isEmpty ||
         salonPhone.isEmpty ||
+        salonEmail.isEmpty ||
         address.isEmpty ||
         city.isEmpty ||
         postalCode.isEmpty ||
         country.isEmpty) {
+      return;
+    }
+
+    // Si le téléphone du salon ne respecte pas le format attendu,
+    // on affiche une erreur et on bloque l'envoi à l'API.
+    if (!salonPhoneRegex.hasMatch(salonPhone)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Le téléphone du salon doit contenir 10 chiffres'),
+        ),
+      );
+
       return;
     }
 
@@ -51,7 +75,7 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
       'firstname': widget.proFlowData.firstname,
       'lastname': widget.proFlowData.lastname,
       'userPhone': widget.proFlowData.userPhone,
-      'email': widget.proFlowData.email,
+      'userEmail': widget.proFlowData.userEmail,
       'password': widget.proFlowData.password,
       'confirmPassword': widget.proFlowData.confirmPassword,
 
@@ -59,19 +83,65 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
       'name': name,
       'description': description,
       'salonPhone': salonPhone,
+      'salonEmail': salonEmail,
       'address': address,
       'city': city,
       'postalCode': postalCode,
       'country': country,
     };
 
-    print(salonData);
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      // On tente d'envoyer les données du salon à l'API.
+      // On stocke la réponse renvoyée par l'API.
+      // Elle contient par exemple le message, le user créé et le salon créé.
+      final result = await ProSalonApiService.createProSalon(
+        salonData: salonData,
+      );
+
+      if (!mounted) return;
+
+      // Si l'API a réussi, on remplace le formulaire par la page pro home.
+      // On envoie aussi les infos utiles pour afficher un message personnalisé.
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.proHome,
+        arguments: {
+          'message': result['message'],
+          'salonName': result['salon']['name'],
+          'firstname': result['user']['firstname'],
+        },
+      );
+    } catch (error) {
+      // Si l'API renvoie une erreur, on récupère le message.
+      // replaceFirst enlève le "Exception: " pour afficher un message plus propre.
+      final errorMessage = error.toString().replaceFirst('Exception: ', '');
+
+      if (!mounted) return;
+
+      // Affiche le message d'erreur en bas de l'écran.
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+    } finally {
+      // Ce bloc s'exécute toujours, que l'appel API réussisse ou échoue.
+      // On vérifie que le widget existe encore avant d'appeler setState.
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   @override
   void dispose() {
     // On libère les controllers quand le widget disparaît.
     salonPhoneController.dispose();
+    salonEmailController.dispose();
     nameController.dispose();
     descriptionController.dispose();
     addressController.dispose();
@@ -121,7 +191,16 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
             controller: salonPhoneController,
             keyboardType: TextInputType.phone,
           ),
-          
+
+          const SizedBox(height: 15),
+
+          _SalonTextField(
+            label: 'Email du salon *',
+            hintText: 'Ex : contact@salon-martin.fr',
+            controller: salonEmailController,
+            keyboardType: TextInputType.emailAddress,
+          ),
+
           const SizedBox(height: 15),
 
           _SalonTextField(
@@ -163,17 +242,26 @@ class _ProSalonInfoWidgetState extends State<ProSalonInfoWidget> {
               width: double.infinity,
               height: 54,
               child: ElevatedButton(
-                onPressed: _handleSubmit,
+                onPressed: isLoading ? null : _handleSubmit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text(
-                  'Valider',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
+                child: isLoading
+                    ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : const Text(
+                        'Valider',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
               ),
             ),
           ),

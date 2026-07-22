@@ -12,6 +12,7 @@ import '../features/pro/pro_establishment_type/screens/pro_establishment_type_sc
 import '../features/pro/pro_establishment_details/screens/pro_establishment_details_screen.dart';
 import '../features/pro/pro_salon_info/screens/pro_salon_info_screen.dart';
 import '../features/pro/pro_account_details/screens/pro_account_details_screen.dart';
+import '../features/pro/pro_home/screens/pro_home_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -25,7 +26,7 @@ class AppRoutes {
   static const String proEstablishmentDetails = '/pro/establishment-details';
   static const String proAccountDetails = '/pro/account-details';
   static const String proSalonInfo = '/pro/salon-info';
-
+  static const String proHome = '/pro/home';
 
   static Map<String, WidgetBuilder> get routes => {
     home: (context) => const HomeScreen(),
@@ -38,6 +39,6 @@ class AppRoutes {
     proAccountDetails: (context) => const ProAccountDetailsScreen(),
     proEstablishmentDetails: (context) => const ProEstablishmentDetailsScreen(),
     proSalonInfo: (context) => const ProSalonInfoScreen(),
-   
+    proHome: (context) => const ProHomeScreen(),
   };
 }
