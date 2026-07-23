@@ -27,6 +27,7 @@ class _RegisterFormState extends State<RegisterForm> {
     final lastname = lastnameController.text.trim();
     final email = emailController.text.trim();
     final phone = phoneController.text.trim();
+    final phoneRegex = RegExp(r'^[0-9]{10}$');
     final password = passwordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
 
@@ -39,6 +40,17 @@ class _RegisterFormState extends State<RegisterForm> {
       return;
     }
 
+    // Le telephone est optionnel.
+    // Mais s'il est rempli, il doit contenir exactement 10 chiffres.
+    if (phone.isNotEmpty && !phoneRegex.hasMatch(phone)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Le numéro de téléphone doit contenir 10 chiffres'),
+        ),
+      );
+
+      return;
+    }
     try {
       // Cree le compte via l'API et recupere la reponse avec le JWT.
       final data = await AuthApiService.register(
@@ -304,7 +316,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                 ),
               ),
-              
+
               const SizedBox(height: 24),
 
               Padding(
@@ -368,7 +380,12 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
 
         // Top bar fixée au-dessus du contenu scrollable.
-        const Positioned(top: 0, left: 0, right: 0, child: BuzzzyTopBar(showBackButton: true)),
+        const Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: BuzzzyTopBar(showBackButton: true),
+        ),
       ],
     );
   }

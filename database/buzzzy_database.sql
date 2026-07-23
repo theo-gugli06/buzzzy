@@ -193,3 +193,4 @@ CREATE TABLE "salonPhoto" (
     CONSTRAINT "fk_salonPhoto_salon"
         FOREIGN KEY ("salonId") REFERENCES salon(id)
 );
+

@@ -26,6 +26,8 @@ class ProEstablishmentDetailsWidget extends StatelessWidget {
       _ => ['Autre'],
     };
 
+    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsString,
   MinLength,
+  Matches,
 } from 'class-validator';
 
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -56,6 +57,9 @@ export class RegisterDto {
 
   // Telephone facultatif pour limiter les donnees personnelles collectees.
   @IsOptional()
+  @Matches(/^[0-9]{10}$/, {
+    message: 'Le téléphone doit contenir exactement 10 chiffres',
+  })
   @IsString({ message: 'Le telephone doit etre une chaine de caracteres' })
   @ApiPropertyOptional({
     example: '0600000000',
